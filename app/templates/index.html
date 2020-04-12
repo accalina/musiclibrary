@@ -95,7 +95,7 @@
 
     </div>
     <script>
-        var socket = io.connect('http://localhost:5000');
+        var socket = io.connect('http://<<hostip>>:5000');
         socket.on('message', function(msg) {
             if (msg == "Done!"){
                 app.getmusic()
@@ -127,7 +127,7 @@
 
                     axios({
                         method: 'post',
-                        url: 'http://localhost:5000/file',
+                        url: 'http://<<hostip>>:5000/file',
                         data: bodyFormData,
                         timeout: 1000 * 10,
                         headers: {
@@ -139,7 +139,7 @@
                 },
                 getmusic: function(){
                     th = this
-                    axios.get(`http://localhost:5000/file`)
+                    axios.get(`http://<<hostip>>:5000/file`)
                         .then(res => {
                             const musiclist = res.data;
                             th.items = (musiclist.data)
