@@ -3,6 +3,7 @@ import os
 from flask import Flask, render_template, request, redirect, jsonify
 from flask_socketio import SocketIO, emit, send
 from util.youtube import download_mp3
+from flask_cors import CORS
 
 
 class CustomFlask(Flask):
@@ -19,6 +20,7 @@ class CustomFlask(Flask):
 app = CustomFlask(__name__)
 app.debug = True
 app.config['SECRET_KEY'] = os.getenv("SECRET_KEY")
+CORS(app)
 socketio = SocketIO(app)
 
 @socketio.on('message')
@@ -28,7 +30,7 @@ def handle_message(message):
 
 @app.route('/')
 def index():    
-    return render_template('index.html')
+    return render_template('index.html', hostip=os.getenv('HOST_IP'))
 
 @app.route('/file', methods=['GET', 'POST'])
 def filemanager():
