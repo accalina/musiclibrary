@@ -1,0 +1,22 @@
+version: "3.5"
+services:
+
+  musiclibrary:
+    build: .
+    image: musiclibrary
+    container_name: musiclibrary
+    restart: unless-stopped
+    volumes:
+      - "./app:/cloudwolf"
+      - "./music:/cloudwolf/static/music"
+    networks: 
+      - comms_network
+    ports:
+      - "5000:5000"
+    env_file:
+      - ../.env
+    command: sh -c "python /cloudwolf/app.py"
+
+networks:
+  comms_network:
+    external: true
